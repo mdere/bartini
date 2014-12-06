@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'acts_as_commentable_with_threading'
-gem 'twitter-bootstrap-rails'
 gem 'pry'
 gem "bcrypt-ruby", :require => "bcrypt"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
