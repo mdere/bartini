@@ -1,0 +1,19 @@
+<h1> Drink Creation </h1>
+
+<%= form_tag create_drink_path do %>
+        <div>
+            <%= label_tag :drink_name %>
+            <%= text_field_tag :drink_name %>
+        </div>
+        <div>
+			<%= radio_button_tag(:visibility, "true") %>
+			<%= label_tag(:visibility_true, "I want my drink to be Private.") %>
+		</div>
+		<div>
+			<%= radio_button_tag(:visibility, "false") %>
+			<%= label_tag(:visibility_false, "I want to share this drink.") %>
+        </div>
+
+        <%= submit_tag("Proceed to Creation!") %>
+
+<% end %>
