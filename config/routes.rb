@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # General Application Routes
   root to: 'sessions#new'
 
-  get 'index', to: 'dashboard#index', as: 'index'
+  get 'xindex', to: 'dashboard#index', as: 'index'
 
   post 'dashboard/sign_in' 
 
