@@ -8,8 +8,8 @@
 					<%= link_to "#{i.drink_name}", drink_page_path(i.id) %>
 				</div>
 				<div>
-					<% if datafile(i.id) %>
-						<%= image_tag "/assets/images/#{datafile(i.id).original_filename}", :alt => "#{datafile(i.id).original_filename}" %>
+					<% if i.avatar.present? %>
+						<%= image_tag i.avatar.url(:thumb), :alt => "#{i.avatar.url}" %>
 					<% else %>
 						<%= image_tag "/assets/images/static_drink.jpg", :alt => "static_drink.jpg" %>
 					<% end %>

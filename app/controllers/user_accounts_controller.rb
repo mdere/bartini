@@ -13,9 +13,15 @@ class UserAccountsController < ApplicationController
     end
   end
 
+  def account_page
+    #@list_of_created_drinks = 
+    #@list_of_personal_favorites = 
+  end
+
   private
 
   def user_accounts_params
     params.require(:user_account).permit(:first_name, :last_name, :email, :user_name, :password)
   end
+
 end

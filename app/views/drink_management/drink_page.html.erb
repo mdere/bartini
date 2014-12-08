@@ -1,15 +1,14 @@
 <h1><%= @drink.drink_name %></h1>
 
-<% if @data_file.present? %>
-	<%= image_tag "/assets/images/#{@data_file.original_filename}", :alt => "#{@data_file.original_filename}" %>
+<% if @drink.avatar.present? %>
+	<%= image_tag @drink.avatar.url(:medium), :alt => "#{@drink.avatar.url}" %>
 <% elsif current_user.id == @drink.user_account_id %>
 	<%= form_tag upload_file_path, :multipart => true do %>
 	    <%= hidden_field_tag "drink_id", @drink.id %>
 		<p>
-			<label for="upload_file">Select File</label> : 
-			<%= file_field 'upload', 'datafile' %>
+			<%= file_field_tag :avatar %>
 		</p>
-		<%= submit_tag "Upload" %>
+		<%= submit_tag("Upload") %>
 	<% end %>
 <% end %>
 

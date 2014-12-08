@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141130202821) do
+ActiveRecord::Schema.define(version: 20141206184529) do
 
   create_table "data_storages", force: true do |t|
     t.string   "path"
@@ -32,11 +32,15 @@ ActiveRecord::Schema.define(version: 20141130202821) do
   end
 
   create_table "drinks", force: true do |t|
-    t.string  "drink_name"
-    t.integer "user_account_id"
-    t.integer "recipe_id"
-    t.text    "description"
-    t.boolean "visibility"
+    t.string   "drink_name"
+    t.integer  "user_account_id"
+    t.integer  "recipe_id"
+    t.text     "description"
+    t.boolean  "visibility"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "ingredients", force: true do |t|

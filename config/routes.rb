@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :user_accounts
   resources :sessions
 
-  # Main Application Routes
+  # Main Application Routes for Drinks
   get 'prepare_drink', to: 'drink_management#prepare_drink', as: 'prepare_drink'
   post 'create_drink', to: 'drink_management#create_drink', as: 'create_drink'
 
@@ -27,5 +27,8 @@ Rails.application.routes.draw do
   post 'upload_file', to: 'drink_management#upload_file', as: 'upload_file'
   
   get 'drink_page/:drink_id', to: 'drink_management#drink_page', as: 'drink_page'
+
+  # Main Application Routes for User Account Page
+  get 'account_page/:user_account_id', to: 'user_accounts#account_page', as: 'account_page'
 
 end

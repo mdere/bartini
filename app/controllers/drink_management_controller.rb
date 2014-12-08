@@ -1,5 +1,6 @@
 class DrinkManagementController < ApplicationController
   def prepare_drink
+  
   end
 
   def create_drink
@@ -72,7 +73,7 @@ class DrinkManagementController < ApplicationController
 
   def drink_page
     @data_file = DataStorage.where("drink_id = ? and user_account_id = ?", params[:drink_id], current_user.id).first
-    @drink = Drink.find(params[:drink_id])
+    @drink = Drink.find_by(id: params[:drink_id])
     @list_of_drink_ingredients = DrinkAssociation.where("drink_id = ?", @drink.id)
     @list_of_mixing_ingredients = []
     @list_of_adding_after_ingredients = []   
@@ -92,14 +93,8 @@ class DrinkManagementController < ApplicationController
   end
   
   def upload_file
-    post = DataStorage.save(params[:upload], params[:drink_id], current_user.id)
-    redirect_to drink_page_path(params[:drink_id])
-  end
-
-  def reupload_file
-    # set reupload boolean to true
-    # improve logic to include this logic into the display,
-    post = DataStorage.save(params[:upload], params[:drink_id])
+    @drink = Drink.find_by(id: params[:drink_id]).update_attributes(avatar: params[:avatar])
+    redirect_to :back
   end
 
   def update_description
@@ -119,7 +114,7 @@ class DrinkManagementController < ApplicationController
   end
 
   def drink_params
-    params.permit(:id, :drink_name, :visibility, :user_account_id)
+    params.permit(:id, :drink_name, :visibility, :user_account_id, :avatar)
   end
 
   def ingredient_params
