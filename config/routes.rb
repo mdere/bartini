@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # General Application Routes
-  root to: 'sessions#new'
+  root to: 'sessions#new', as: 'sign_in'
 
   get 'index', to: 'dashboard#index', as: 'index'
 
@@ -27,8 +27,13 @@ Rails.application.routes.draw do
   post 'upload_file', to: 'drink_management#upload_file', as: 'upload_file'
   
   get 'drink_page/:drink_id', to: 'drink_management#drink_page', as: 'drink_page'
+  post 'add_comment', to: 'drink_management#add_comment', as: 'add_comment'
+
+  post 'like', to: 'drink_management#like', as: 'like'
+  post 'unlike', to: 'drink_management#unlike', as: 'unlike'
 
   # Main Application Routes for User Account Page
   get 'account_page/:user_account_id', to: 'user_accounts#account_page', as: 'account_page'
+  post 'reset_password', to: 'user_accounts#reset_password', as: 'reset_password'
 
 end

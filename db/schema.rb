@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206184529) do
+ActiveRecord::Schema.define(version: 20141210031406) do
 
   create_table "data_storages", force: true do |t|
     t.string   "path"
@@ -73,9 +73,25 @@ ActiveRecord::Schema.define(version: 20141206184529) do
     t.string "password_salt"
   end
 
+  create_table "user_comment_associations", force: true do |t|
+    t.integer  "drink_id"
+    t.integer  "user_account_id"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_drink_libraries", force: true do |t|
     t.integer "user_account_id"
     t.integer "drink_id"
+  end
+
+  create_table "user_like_associations", force: true do |t|
+    t.integer  "drink_id"
+    t.integer  "user_account_id"
+    t.boolean  "like"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "venue_accounts", force: true do |t|

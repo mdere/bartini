@@ -1,1 +1,10 @@
-<h1> Account Page </h1>
+<h3> Reset Password </h3>
+<%= form_tag reset_password_path do %>
+    <%= label_tag :current_password %>
+    <%= password_field_tag :current_password %>
+    <%= label_tag :new_password %>
+    <%= password_field_tag :new_password %>
+    <%= label_tag :password_confirm %>
+    <%= password_field_tag :password_confirm %>
+    <%= submit_tag "Change Password" %>
+<% end %>

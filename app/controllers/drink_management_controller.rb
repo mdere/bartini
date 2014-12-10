@@ -74,6 +74,7 @@ class DrinkManagementController < ApplicationController
   def drink_page
     @data_file = DataStorage.where("drink_id = ? and user_account_id = ?", params[:drink_id], current_user.id).first
     @drink = Drink.find_by(id: params[:drink_id])
+    @comments_for_drink = UserCommentAssociation.where("drink_id = ?", @drink.id)
     @list_of_drink_ingredients = DrinkAssociation.where("drink_id = ?", @drink.id)
     @list_of_mixing_ingredients = []
     @list_of_adding_after_ingredients = []   
@@ -91,6 +92,12 @@ class DrinkManagementController < ApplicationController
       end  
     end   
   end
+
+  def add_comment
+    Rails.logger.info "====== PARAMS:  #{params}"
+    UserCommentAssociation.create(user_account_id: current_user.id, drink_id: params[:drink_id], comment: params[:comment])
+    redirect_to drink_page_path(params[:drink_id])
+  end
   
   def upload_file
     @drink = Drink.find_by(id: params[:drink_id]).update_attributes(avatar: params[:avatar])
@@ -107,7 +114,21 @@ class DrinkManagementController < ApplicationController
     end
   end
 
+  def like
+    like_drink(current_user.id, params[:drink_id])
+    redirect_to drink_page_path(params[:drink_id])
+  end
+
+  def unlike
+    unlike_drink(current_user.id, params[:drink_id])
+    redirect_to drink_page_path(params[:drink_id])
+  end
+
   private 
+
+  def user_comment_association_params
+    params.permit(:id, :drink_id, :user_account_id, :comment)
+  end
 
   def drink_association_params
     params.permit(:id, :drink_id, :ingredient_id, :step_id, :quantity)

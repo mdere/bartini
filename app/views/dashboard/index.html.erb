@@ -1,22 +1,35 @@
-<h1> Welcome to Bartini </h1>
-
-<table>
+<div id='pins' class='transitions-enabled'>
 	<% @list_of_drinks.each do |i| %>
-		<% if ( (current_user.id == i.user_account_id) && i.visibility ) || !i.visibility %>
-			<tr> 
-				<div>
-					<%= link_to "#{i.drink_name}", drink_page_path(i.id) %>
-				</div>
-				<div>
+		<% if ( (current_user.id == i.user_account_id) && i.visibility ) || !i.visibility %>	
+			<div class="box panel panel-default">
+				<div id="panel-show" class="panel-heading pin-image">
 					<% if i.avatar.present? %>
-						<%= image_tag i.avatar.url(:thumb), :alt => "#{i.avatar.url}" %>
+						<%= image_tag i.avatar.url(:medium), :alt => "#{i.avatar.url}" %>
 					<% else %>
-						<%= image_tag "/assets/images/static_drink.jpg", :alt => "static_drink.jpg" %>
+						No Image...
 					<% end %>
 				</div>
-			</tr>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 text-center">
+						<%= link_to "#{i.drink_name}", drink_page_path(i.id) %>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-center">
+						Comments: <%= UserCommentAssociation.where("drink_id = ?", i.id).count %>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-center user">
+						Likes: <%= UserLikeAssociation.where("drink_id = ? and like = ?", i.id, true).count %>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer text-right">
+					Created by <%= UserAccount.find(i.user_account_id).user_name %> 
+				</div>
+			</div>
 		<% end %>
 	<% end %>
-</table>
-
-<%= link_to 'Create Drink', prepare_drink_path %>
+</div>

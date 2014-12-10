@@ -1,4 +1,11 @@
 class UserAccount < ActiveRecord::Base
+  has_many :user_comment_association
+  has_many :comments, :through => :user_comment_association
+  has_many :drinks, :through => :user_comment_association
+
+  has_many :user_like_association
+  has_many :drinks, :through => :user_comment_association
+  has_many :likes, :through => :user_comment_association  
 
   attr_accessor :password
   before_save :encrypt_password

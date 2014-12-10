@@ -2,7 +2,7 @@
  	<%= hidden_field_tag "drink_id", new_drink.id %>
  	<%= hidden_field_tag "edit_mode", true %>
  	<div>
-		<%= collection_select :ingredient, :ingredient_id, Ingredient.all, :id, :ingredient_name, :prompt => true %>
+		<%= collection_select :ingredient, :ingredient_id, Ingredient.all, :id, :name_and_measure, :prompt => true %>
     	<%= label_tag :quantity %>
     	<%= text_field_tag :quantity %>
     	<%= submit_tag("Add") %>

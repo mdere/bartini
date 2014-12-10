@@ -1,93 +1,150 @@
-<h1><%= @drink.drink_name %></h1>
 
-<% if @drink.avatar.present? %>
-	<%= image_tag @drink.avatar.url(:medium), :alt => "#{@drink.avatar.url}" %>
-<% elsif current_user.id == @drink.user_account_id %>
-	<%= form_tag upload_file_path, :multipart => true do %>
-	    <%= hidden_field_tag "drink_id", @drink.id %>
-		<p>
-			<%= file_field_tag :avatar %>
-		</p>
-		<%= submit_tag("Upload") %>
-	<% end %>
-<% end %>
-
-<% if current_user.id == @drink.user_account_id %>
-	<table> 
-		<tr>
-			<td>
-				<%= link_to "Edit Ingredients", edit_ingredients_path(@drink.id) %> 
-			</td>
-		</tr>
-	</table>
-<% end %>
-
-<p> <%= @drink.description %> </p>
-
-<ul>
-	<li>
-		<h3> Ingredients Mixing in with each other. </h3>
-		<ul>
-			<% if @list_of_mixing_ingredients.present? %>
-				<% @list_of_mixing_ingredients.each do |i| %>
-					<li> Mix <%= Ingredient.find(i.ingredient_id).ingredient_name %> in drink
-					</li>
-				<% end %>
+<div class="container-fluid">
+	<div class="col-md-4">
+		<div class="row">
+			<% if @drink.avatar.present? %>
+				<%= image_tag @drink.avatar.url(:medium), :alt => "#{@drink.avatar.url}" %>
 			<% else %>
-				<td> 
-					No ingredient's present to be mixed in.
-				</td> 
+				<%= image_tag "/assets/images/static_drink.jpg", :alt => "static_drink.jpg" %>
 			<% end %>
-		</ul>
-	</li>	
-
-	<li>
-		<h3> Adding Ingredients after mixing. </h3>
-		<ul>
-			<% if @list_of_adding_after_ingredients.present? %>
-				<% @list_of_adding_after_ingredients.each do |i| %>
-						<li> Pour <%= Ingredient.find(i.ingredient_id).ingredient_name %> in
-						</li>
+		</div>
+		<div class="row">
+			<div>
+				<% if current_user.id == @drink.user_account_id %>
+					<%= link_to "Edit Drink", edit_ingredients_path(@drink.id) %> 
 				<% end %>
-			<% else %> 	
-				<li> 
-					No ingredient's present to be Added in.
-				</li> 
-			<% end %>
-		</ul>
-	</li>
-
-	<li>
-		<h3> Garnish Ingredients after mixing. </h3>
-		<ul>
-			<% if @list_of_garnishing_ingredients.present? %>
-				<% @list_of_garnishing_ingredients.each do |i| %>
-						<li> Add <%= Ingredient.find(i.ingredient_id).ingredient_name %> as a garnish.
-						</li>
+			</div>
+		</div>
+		<div class="row">
+			Place Holder for list of related drinks...
+		</div>
+	</div>
+	<div class="col-md-8">
+		<div class="row">
+			<div class="col-md-7 col-centered vcenter">
+			<h3><%= @drink.drink_name %> by <%= UserAccount.find(@drink.user_account_id).user_name %></h3>
+			</div>
+			<div class="col-md-1 col-centered vcenter">
+				<% if get_liked_drink(current_user.id, @drink.id).present? && get_liked_drink(current_user.id, @drink.id).first.like %>
+					<%= form_tag unlike_path do %>
+						<%= hidden_field_tag 'drink_id', @drink.id %>
+						<%= submit_tag "unlike" %>
+					<% end %>
+				<% elsif (get_liked_drink(current_user.id, @drink.id).present? && !get_liked_drink(current_user.id, @drink.id).first.like) || !get_liked_drink(current_user.id, @drink_id).present? %>
+					<%= form_tag like_path do %>
+						<%= hidden_field_tag 'drink_id', @drink.id %>
+						<%= submit_tag "like" %>
+					<% end %>
 				<% end %>
-			<% else %> 	
-				<li> 
-					No ingredient's present to be Added in.
-				</li> 
-			<% end %>
-		</ul>
-	</li>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<%= @drink.description %>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<ul>
+					<li>
+						<h4> Ingredients Mixing in with each other. </h4>
+						<ul>
+							<% if @list_of_mixing_ingredients.present? %>
+								<% @list_of_mixing_ingredients.each do |i| %>
+									<li> Mix <%= Ingredient.find(i.ingredient_id).ingredient_name %> in drink
+									</li>
+								<% end %>
+							<% else %>
+								<td> 
+									No ingredient's present to be mixed in.
+								</td> 
+							<% end %>
+						</ul>
+					</li>	
 
-	<li>
-		<h3> Coat Rim with the following Ingredients. </h3>
-		<ul>
-			<% if @list_of_coating_rim_ingredients.present? %>
-				<% @list_of_coating_rim_ingredients.each do |i| %>
-						<li> Coat <%= Ingredient.find(i.ingredient_id).ingredient_name %> on rim.
-						</li>
-				<% end %>
-			<% else %> 	
-				<li> 
-					No ingredient's present to be Added in.
-				</li> 
-			<% end %>
-		</ul>
-	</li>
-</ul>
+					<li>
+						<h4> Adding Ingredients after mixing. </h4>
+						<ul>
+							<% if @list_of_adding_after_ingredients.present? %>
+								<% @list_of_adding_after_ingredients.each do |i| %>
+										<li> Pour <%= Ingredient.find(i.ingredient_id).ingredient_name %> in
+										</li>
+								<% end %>
+							<% else %> 	
+								<li> 
+									No ingredient's present to be Added in.
+								</li> 
+							<% end %>
+						</ul>
+					</li>
 
-<h2> Comments </h2>
+					<li>
+						<h4> Garnish Ingredients after mixing. </h4>
+						<ul>
+							<% if @list_of_garnishing_ingredients.present? %>
+								<% @list_of_garnishing_ingredients.each do |i| %>
+										<li> Add <%= Ingredient.find(i.ingredient_id).ingredient_name %> as a garnish.
+										</li>
+								<% end %>
+							<% else %> 	
+								<li> 
+									No ingredient's present to be Added in.
+								</li> 
+							<% end %>
+						</ul>
+					</li>
+
+					<li>
+						<h4> Coat Rim with the following Ingredients. </h4>
+						<ul>
+							<% if @list_of_coating_rim_ingredients.present? %>
+								<% @list_of_coating_rim_ingredients.each do |i| %>
+										<li> Coat <%= Ingredient.find(i.ingredient_id).ingredient_name %> on rim.
+										</li>
+								<% end %>
+							<% else %> 	
+								<li> 
+									No ingredient's present to be Added in.
+								</li> 
+							<% end %>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="detailBox">
+				    <div class="titleBox">
+				      <label>Comment</label>
+				    </div>
+
+					<div>
+				  		<div class="form-group">
+							<%= form_tag add_comment_path do %>
+								<%= hidden_field_tag :drink_id, @drink.id %>
+								<%= text_area_tag(:comment, "", placeholder: "Add comment...", size: '50x10') %>
+							<div>
+								<%= submit_tag("Comment", :class => "btn btn-default") %>
+							</div>
+							<% end %>
+						</div>
+					</div>
+					<div>
+						<div class="actionBox">
+				        	<ul class="commentList">
+								<% @comments_for_drink.each do |comment| %>
+									<li>
+										<div class="commentText">
+											<p class=""><%= comment.comment %></p> <span class="date sub-text"><%= UserAccount.find_by(id: comment.user_account_id).user_name %> @ <%= comment.created_at %></span>	
+										</div>
+									</li>
+								<% end %>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
