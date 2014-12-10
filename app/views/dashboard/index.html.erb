@@ -22,7 +22,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12 text-center user">
-						Likes: <%= UserLikeAssociation.where("drink_id = ? and like = ?", i.id, true).count %>
+						Likes: <%= UserLikeAssociation.where(drink: i).where(like: true).count %>
 						</div>
 					</div>
 				</div>
