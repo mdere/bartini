@@ -8,10 +8,10 @@ class DrinkManagementController < ApplicationController
     new_drink = Drink.new(drink_params)
     if new_drink.save
       Rails.logger.info "Created new drink"
+      redirect_to edit_ingredients_path(new_drink.id)
     else
       redirect_to index_path
     end
-    redirect_to edit_ingredients_path(new_drink.id)
   end
 
   def add_ingredient
