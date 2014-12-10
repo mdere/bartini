@@ -4,7 +4,7 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'masonry-rails'
 gem "therubyracer"
 gem "less-rails"
-gem 'twitter-bootstrap-rails'
+#gem 'twitter-bootstrap-rails'
 gem 'pry'
 gem "bcrypt-ruby", :require => "bcrypt"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
