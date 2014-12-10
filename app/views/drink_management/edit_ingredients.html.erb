@@ -29,8 +29,11 @@
 		<div class="row">
 			<ul>
 				<li>
-					<h3> Unassociated Ingredient with step </h3>
+					<h3> Add Ingredient Interace </h3>
 					<%= render partial: 'add_ingredients', locals: {new_drink: @new_drink} %>
+				</li>
+				<li>
+					<h3> Unassociated Ingredient with step </h3>
 					<%= render partial: 'edit_ingredients_row', locals: {ingredients: @list_of_unassociated_drink, new_drink: @new_drink} %>		 
 				</li>
 				<li>
